@@ -125,3 +125,30 @@ java -jar obeliks.jar -if text*.txt
 ```
 All other examples from Linux section should also run on Windows (except
 for specifying directory separator).
+
+Docker
+---
+
+Building the image:
+```
+docker build -t obeliks4j:latest .
+```
+
+Create container from the newly built image and run it:
+```
+echo -e "To je stavek.\nTudi to je stavek." | docker run --name obeliks4j -i obeliks4j:latest
+```
+
+When working with files it is recommended to use volumes. For example if we have our input text files inside ~/data/:
+```
+docker run --name obeliks4j -i -v ~/data:/data --entrypoint /bin/sh obeliks4j:latest -c "java -jar obeliks.jar -if /data/text*.txt -o /data/output.txt"
+```
+To make use of shell expansion inside the container, we had to override the default entrypoint to run the command as "/bin/sh -c ...".
+
+You can reuse an existing container by using the "docker start" command.
+
+Remove container:
+```
+docker rm obeliks4j
+```
+

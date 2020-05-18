@@ -23,4 +23,6 @@ out/
 *.ncb
 *.log
 
+*.jar
 *.class
+
